@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model package="alv" baseClass="xPDOObject" platform="mysql" defaultEngine="MyISAM" phpdoc-package="alv" version="1.1">
+
+	<object class="alvResource" table="alv_resources" extends="xPDOObject">
+		<field key="id" dbtype="integer" precision="10" phptype="integer" attributes="unsigned" null="false" index="pk" />
+		<field key="language" dbtype="char" precision="2" phptype="string" null="false" index="pk" />
+
+		<field key="pagetitle" dbtype="varchar" precision="255" phptype="string" null="false" default="" index="fulltext" indexgrp="content_ft_idx" />
+		<field key="longtitle" dbtype="varchar" precision="255" phptype="string" null="false" default="" index="fulltext" indexgrp="content_ft_idx" />
+		<field key="description" dbtype="varchar" precision="255" phptype="string" null="false" default="" index="fulltext" indexgrp="content_ft_idx" />
+		<field key="alias" dbtype="varchar" precision="255" phptype="string" null="true" default="" index="index" />
+
+		<field key="link_attributes" dbtype="varchar" precision="255" phptype="string" null="false" default="" />
+
+		<field key="introtext" dbtype="text" phptype="string" index="fulltext" indexgrp="content_ft_idx" />
+		<field key="content" dbtype="mediumtext" phptype="string" index="fulltext" indexgrp="content_ft_idx" />
+		<field key="menutitle" dbtype="varchar" precision="255" phptype="string" null="false" default="" />
+
+		<field key="uri" dbtype="text" phptype="string" null="true" index="index" />
+		<field key="uri_override" dbtype="tinyint" precision="1" phptype="integer" null="false" default="0" index="index" />
+
+		<field key="properties" dbtype="mediumtext" phptype="json" null="true" />
+
+		<index alias="pk" name="pk" primary="true" unique="true" type="BTREE">
+			<column key="id" length="" collation="A" null="false" />
+			<column key="language" length="" collation="A" null="false" />
+		</index>
+		<index alias="alias" name="alias" primary="false" unique="false" type="BTREE">
+			<column key="alias" length="" collation="A" null="true" />
+		</index>
+		<index alias="uri" name="uri" primary="false" unique="false" type="BTREE">
+			<column key="uri" length="333" collation="A" null="true" />
+		</index>
+		<index alias="uri_override" name="uri_override" primary="false" unique="false" type="BTREE">
+			<column key="uri_override" length="" collation="A" null="false" />
+		</index>
+		<index alias="content_ft_idx" name="content_ft_idx" primary="false" unique="false" type="FULLTEXT">
+			<column key="pagetitle" length="" collation="A" null="false" />
+			<column key="longtitle" length="" collation="A" null="false" />
+			<column key="description" length="" collation="A" null="false" />
+			<column key="introtext" length="" collation="A" null="true" />
+			<column key="content" length="" collation="A" null="true" />
+		</index>
+
+		<aggregate alias="Resource" class="modResource" local="id" foreign="id" cardinality="one" owner="foreign" />
+	</object>
+
+</model>
